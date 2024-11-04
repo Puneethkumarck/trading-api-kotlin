@@ -1,0 +1,99 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
+	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
+	id 'org.springframework.boot' version "$springbootVersion"
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.diffplug.spotless' version "$spotlessVersion"
+	id 'org.sonarqube' version '5.1.0.4882'
+	id 'jacoco'
+	id 'org.jetbrains.kotlin.kapt' version '1.9.25'
+}
+
+group = 'com.xchange.valr'
+version = '0.0.1-SNAPSHOT'
+
+kotlin {
+	jvmToolchain(21)
+}
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+jacoco {
+	toolVersion = "0.8.12"
+}
+
+jar {
+	archiveFileName = "app.jar"
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'commons-cli:commons-cli:1.9.0'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+	implementation "org.mapstruct:mapstruct:$mapstructVersion"
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'io.github.oshai:kotlin-logging:7.0.0'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	kapt "org.mapstruct:mapstruct-processor:$mapstructVersion"
+	kapt 'org.projectlombok:lombok'
+	kapt "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+	testImplementation 'com.ninja-squad:springmockk:4.0.2'
+	testImplementation 'org.awaitility:awaitility-kotlin'
+	testImplementation 'io.mockk:mockk:1.13.8'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+kapt {
+	arguments {
+		arg("mapstruct.defaultComponentModel", "spring")
+		arg("mapstruct.defaultInjectionStrategy", "constructor")
+	}
+}
+
+spotless {
+	kotlin {
+		ktlint()
+		targetExclude("build/generated/**/*.kt")
+	}
+	kotlinGradle {
+		ktlint()
+	}
+}
+
+tasks.withType(KotlinCompile).configureEach {
+	kotlinOptions {
+		freeCompilerArgs += '-Xjsr305=strict'
+		jvmTarget = '21'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
