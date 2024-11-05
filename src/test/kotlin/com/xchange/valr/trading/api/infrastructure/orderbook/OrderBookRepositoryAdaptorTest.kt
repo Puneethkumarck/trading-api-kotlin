@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 class OrderBookRepositoryAdaptorTest {
-
     @MockK(relaxed = true)
     private lateinit var inMemoryOrderBookRepository: InMemoryOrderBookRepository
 
