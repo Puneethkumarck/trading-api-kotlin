@@ -14,6 +14,6 @@ data class OrderBookResponseDto(
         val quantity: BigDecimal,
         val price: BigDecimal,
         val currencyPair: String,
-        val orderCount: Instant,
+        val orderCount: Int,
     )
 }
