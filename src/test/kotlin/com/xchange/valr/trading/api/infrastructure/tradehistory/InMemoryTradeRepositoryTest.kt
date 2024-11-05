@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
 class InMemoryTradeRepositoryTest {
-
     private val repository = InMemoryTradeRepository()
 
     @Test

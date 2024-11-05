@@ -18,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 class TradeHistoryRepositoryAdapterTest {
-
     @MockK
     private lateinit var repository: InMemoryTradeRepository
 
