@@ -6,6 +6,7 @@ import com.xchange.valr.trading.fixtures.OrderBookFixtures
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.SpyK
 import io.mockk.junit5.MockKExtension
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -19,7 +20,8 @@ class OrderBookRepositoryAdaptorTest {
     @InjectMockKs
     private lateinit var adaptor: OrderBookRepositoryAdaptor
 
-    private val mapper = OrderBookEntityMapperImpl()
+    @SpyK
+    private var mapper = OrderBookEntityMapperImpl()
 
     @Test
     fun `should get order book for given currency pair`() {

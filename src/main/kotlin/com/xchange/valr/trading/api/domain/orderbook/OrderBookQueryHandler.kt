@@ -1,5 +1,6 @@
 package com.xchange.valr.trading.api.domain.orderbook
 
+import com.xchange.valr.trading.api.domain.orderbook.OrderBookNotFoundException.Companion.withCurrencyPair
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
 
@@ -9,8 +10,9 @@ private val logger = KotlinLogging.logger {}
 class OrderBookQueryHandler(
     private val orderBookRepository: OrderBookRepository,
 ) {
-    fun getOrderBook(currencyPair: String): OrderBook =
-        orderBookRepository.findByCurrencyPair(currencyPair)
-            ?.also { logger.info { "${"Found order book for currency pair: {}"} $currencyPair" } }
-            ?: throw OrderBookNotFoundException.withCurrencyPair(currencyPair)
+    fun getOrderBook(currencyPair: String): OrderBook {
+        logger.debug { "Finding order book for currency pair: $currencyPair" }
+        return orderBookRepository.findByCurrencyPair(currencyPair)
+            ?: throw withCurrencyPair(currencyPair)
+    }
 }

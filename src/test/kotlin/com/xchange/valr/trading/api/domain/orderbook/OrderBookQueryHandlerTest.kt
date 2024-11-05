@@ -46,6 +46,7 @@ class OrderBookQueryHandlerTest {
             }
 
         // then
-        assertThat(exception.message).isEqualTo("Order book not found for currency pair: ${BTCZAR.name}")
+        assertThat(exception.message)
+            .isEqualTo("Order book not found for currency pair: ${BTCZAR.name}")
     }
 }
