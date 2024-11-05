@@ -101,7 +101,6 @@ class TradeHistoryControllerTest {
     @Test
     @WithMockUser
     fun `should return empty list when no trades found`() {
-
         every {
             handler.getTradeHistory(BTCZAR.name, DEFAULT_PAGE_SIZE)
         } returns emptyList()
