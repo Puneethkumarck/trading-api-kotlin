@@ -28,7 +28,7 @@ class TradeHistoryEntityMapperTest {
                 price = trade.price,
                 quoteVolume = trade.quoteVolume,
                 tradedAt = trade.tradedAt,
-                sequenceId = trade.sequenceId,
+                sequenceId = trade.sequenceId ?: 1L,
             )
 
         assertThat(result)
