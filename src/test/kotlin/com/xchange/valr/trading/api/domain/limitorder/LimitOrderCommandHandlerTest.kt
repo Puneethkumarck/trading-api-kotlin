@@ -42,7 +42,8 @@ class LimitOrderCommandHandlerTest {
     fun `should reject duplicate order`() {
         // given
         val command = createLimitOrder()
-        every { validator.validate(command) } throws withOrderId(command.customerOrderId)
+        val orderId = command.customerOrderId ?: "existingOrderId"
+        every { validator.validate(command) } throws withOrderId(orderId)
 
         // when/then
         assertThrows<LimitOrderAlreadyExistsException> {

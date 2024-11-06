@@ -25,8 +25,8 @@ class LimitOrderEntityMapperTest {
         // then
         val expected =
             LimitOrderEntity(
-                orderId = command.customerOrderId,
-                customerOrderId = command.customerOrderId,
+                orderId = command.customerOrderId ?: "orderid",
+                customerOrderId = command.customerOrderId ?: "orderid",
                 currencyPair = command.limitOrder.currencyPair,
                 side = LimitOrderEntity.OrderSide.BUY,
                 quantity = command.limitOrder.quantity,
@@ -57,8 +57,8 @@ class LimitOrderEntityMapperTest {
         // then
         val expected =
             LimitOrderEntity(
-                orderId = command.customerOrderId,
-                customerOrderId = command.customerOrderId,
+                orderId = command.customerOrderId ?: "orderid",
+                customerOrderId = command.customerOrderId ?: "orderid",
                 currencyPair = command.limitOrder.currencyPair,
                 side = LimitOrderEntity.OrderSide.SELL,
                 quantity = command.limitOrder.quantity,

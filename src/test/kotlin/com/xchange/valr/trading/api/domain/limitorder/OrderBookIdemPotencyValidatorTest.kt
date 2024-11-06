@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -24,7 +25,8 @@ class OrderBookIdemPotencyValidatorTest {
     fun `should save new order`() {
         // given
         val command = createLimitOrder()
-        every { orderRepository.findByOrderId(command.customerOrderId) } returns null
+        val orderId = command.customerOrderId ?: randomAlphanumeric(50)
+        every { orderRepository.findByOrderId(orderId) } returns null
         every { orderRepository.save(command) } returns command
 
         // when
@@ -38,7 +40,8 @@ class OrderBookIdemPotencyValidatorTest {
     fun `should throw exception when duplicate order found`() {
         // given
         val command = createLimitOrder()
-        every { orderRepository.findByOrderId(command.customerOrderId) } returns command
+        val orderId = command.customerOrderId ?: randomAlphanumeric(50)
+        every { orderRepository.findByOrderId(orderId) } returns command
 
         // when
         val exception =
@@ -56,6 +59,7 @@ class OrderBookIdemPotencyValidatorTest {
         // given
         val command = createLimitOrder().copy(customerOrderId = orderId)
         every { orderRepository.save(command) } returns command
+        every { orderRepository.findByOrderId(orderId) } returns null
 
         // when
         val result = validator.validate(command)

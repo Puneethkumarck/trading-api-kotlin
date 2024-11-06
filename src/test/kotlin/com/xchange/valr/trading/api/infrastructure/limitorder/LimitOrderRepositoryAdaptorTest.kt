@@ -6,6 +6,7 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.junit5.MockKExtension
+import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -43,11 +44,12 @@ class LimitOrderRepositoryAdaptorTest {
         // given
         val command = createLimitOrder()
         val entity = mapper.toEntity(command)
+        val orderId = command.customerOrderId ?: randomAlphanumeric(50)
 
-        every { repository.findByOrderId(command.customerOrderId) } returns entity
+        every { repository.findByOrderId(orderId) } returns entity
 
         // when
-        val result = adaptor.findByOrderId(command.customerOrderId)
+        val result = adaptor.findByOrderId(orderId)
 
         // then
         assertThat(result)
