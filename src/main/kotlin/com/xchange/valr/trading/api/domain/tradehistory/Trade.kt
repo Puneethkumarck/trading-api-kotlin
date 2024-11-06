@@ -11,7 +11,7 @@ data class Trade(
     val price: BigDecimal,
     val quoteVolume: BigDecimal,
     val tradedAt: Instant,
-    val sequenceId: Long,
+    val sequenceId: Long?,
 ) {
     enum class TakerSide(val side: String) {
         BUY("buy"),

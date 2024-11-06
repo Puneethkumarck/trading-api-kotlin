@@ -27,7 +27,7 @@ class TradeHistoryDtoMapperTest {
                 price = trade.price,
                 quoteVolume = trade.quoteVolume,
                 tradedAt = trade.tradedAt,
-                sequenceId = trade.sequenceId,
+                sequenceId = trade.sequenceId ?: 1L,
             )
 
         // then
@@ -63,6 +63,6 @@ class TradeHistoryDtoMapperTest {
             price = price,
             quoteVolume = quoteVolume,
             tradedAt = tradedAt,
-            sequenceId = sequenceId,
+            sequenceId = sequenceId ?: 1L,
         )
 }

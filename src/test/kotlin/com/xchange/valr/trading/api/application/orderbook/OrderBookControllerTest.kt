@@ -57,13 +57,10 @@ class OrderBookControllerTest {
             mockMvc.perform(get(URI, BTCZAR.name))
                 .andExpect(status().isOk)
                 .andReturn()
+                .response
 
         // then
-        val response =
-            objectMapper.readValue(
-                result.response.contentAsString,
-                OrderBookResponseDto::class.java,
-            )
+        val response = objectMapper.readValue<OrderBookResponseDto>(result.contentAsString)
 
         val expected = mapper.toDto(orderBook(BTCZAR.name))
 

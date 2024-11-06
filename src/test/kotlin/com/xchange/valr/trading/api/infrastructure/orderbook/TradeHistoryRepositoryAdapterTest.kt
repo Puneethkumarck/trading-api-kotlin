@@ -41,7 +41,7 @@ class TradeHistoryRepositoryAdapterTest {
                 price = trade.price,
                 quoteVolume = trade.quoteVolume,
                 tradedAt = trade.tradedAt,
-                sequenceId = trade.sequenceId,
+                sequenceId = trade.sequenceId ?: 1L,
             )
 
         every { repository.save(entity) } returns entity
@@ -67,7 +67,7 @@ class TradeHistoryRepositoryAdapterTest {
                 price = trade.price,
                 quantity = trade.quantity,
                 quoteVolume = trade.quoteVolume,
-                sequenceId = trade.sequenceId,
+                sequenceId = trade.sequenceId ?: 1L,
                 tradedAt = trade.tradedAt,
             )
         every { repository.findRecentTradeByCurrencyPair(BTCZAR.name, 1) } returns listOf(entity)
@@ -95,7 +95,7 @@ class TradeHistoryRepositoryAdapterTest {
                 price = trade.price,
                 quantity = trade.quantity,
                 quoteVolume = trade.quoteVolume,
-                sequenceId = trade.sequenceId,
+                sequenceId = trade.sequenceId ?: 1L,
                 tradedAt = trade.tradedAt,
             )
         every { repository.findTradeByOrderId(trade.id) } returns entity
