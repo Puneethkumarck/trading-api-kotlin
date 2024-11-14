@@ -5,7 +5,8 @@ import java.math.BigDecimal
 import java.util.concurrent.ConcurrentNavigableMap
 
 class SellOrderProcessor : OrderProcessor() {
-    override fun getMatchingSide(orderBook: OrderBook): ConcurrentNavigableMap<BigDecimal, OrderBook.OrderBookLevel> = orderBook.bids
+    override fun getMatchingSide(orderBook: OrderBook): ConcurrentNavigableMap<BigDecimal, OrderBook.OrderBookLevel> =
+        orderBook.bids.descendingMap()
 
     override fun getPlacementSide(orderBook: OrderBook): ConcurrentNavigableMap<BigDecimal, OrderBook.OrderBookLevel> = orderBook.asks
 
