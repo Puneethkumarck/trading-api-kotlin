@@ -13,6 +13,11 @@ class OrderBookQueryHandler(
     fun getOrderBook(currencyPair: String): OrderBook {
         logger.debug { "Finding order book for currency pair: $currencyPair" }
         return orderBookRepository.findByCurrencyPair(currencyPair)
+            ?.let { orderBook ->
+                orderBook.copy(
+                    bids = orderBook.bids.descendingMap(),
+                )
+            }
             ?: throw withCurrencyPair(currencyPair)
     }
 }

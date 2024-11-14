@@ -18,7 +18,7 @@ class SellOrderProcessorTest : OrderProcessorBaseTest() {
 
         // when/then
         assertThat(processor.getMatchingSide(orderBook))
-            .isSameAs(orderBook.bids)
+            .isSameAs(orderBook.bids.descendingMap())
     }
 
     @Test
